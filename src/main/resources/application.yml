@@ -1,0 +1,21 @@
+# MyBatis-Plus 配置
+mybatis-plus:
+  type-aliases-package: com.hzau.college.pojo
+  configuration:
+    use-generated-keys: true
+  global-config:
+    db-config:
+      id-type: auto
+
+logging:
+  level:
+    com.hzau.college.mapper: debug
+
+#guidance:
+#  cors: # 跨域相关配置
+#    cors-origins:
+#      - http://localhost:63342
+
+spring:
+  profiles:
+    active: dev # 声明使用哪个配置文件

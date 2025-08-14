@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzau.college.mapper.ProjectMapper">
+
+    <resultMap  id="rmGetSubjectProject"
+                type="SubjectProjectVo">
+            <result column="year" property="year"/>
+            <collection property="subjects" ofType="SubjectVo">
+                <result column="subject_id" property="subjectId"  />
+                <result column="subject_name" property="subjectName"  />
+                <result column="subject_remark" property="subjectRemark"  />
+                <result column="tuition" property="tuition"  />
+                <result column="duration" property="duration"  />
+                <result column="number" property="number"  />
+                <result column="require_course_id" property="requireCourseId"  />
+                <result column="require_course_type_id" property="requireCourseTypeId"  />
+            </collection>
+    </resultMap>
+
+    <select id="getSubjectProject" resultMap="rmGetSubjectProject" >
+        SELECT
+             college_id, subject_id, subject_name, subject_remark, tuition, duration, number, year,
+               require_course_id, require_course_type_id
+        FROM
+            data_projects
+        WHERE
+            college_id = #{collegeId}
+        AND
+            year = #{year}
+        ORDER BY
+            subject_name, year
+    </select>
+
+</mapper>
+

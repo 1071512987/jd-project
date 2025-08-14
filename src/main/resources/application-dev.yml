@@ -1,0 +1,33 @@
+server:
+  port: 9090
+
+# 后端调试环境
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+#    username: college_guidance
+#    password: KxZGTKzTXbwwExaj
+#    url: jdbc:mysql://localhost:3306/college_guidance?serverTimezone=GMT%2B8
+    username: root
+    password: mike
+    url: jdbc:mysql://localhost:3306/jd_data?serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    default-property-inclusion: non_null #默认情况下非空字符串才返回
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    #    password: mike
+    database: 0
+    timeout: 5000
+    lettuce:
+      pool:
+        max-idle: 16
+        max-active: 32
+        min-idle: 8
+        max-wait: 1000
+
+# Knife4J
+knife4j:
+    enable: true
+

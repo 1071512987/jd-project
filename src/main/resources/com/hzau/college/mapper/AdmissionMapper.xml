@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzau.college.mapper.AdmissionMapper">
+
+    <!-- 待改进 -->
+    <resultMap  id="rmListSubject"
+                type="SubjectSecondNameDto">
+        <result column="college_id" property="collegeId"/>
+        <collection property="secondNameVos" ofType="SubjectSecondNameVo"  >
+            <result column="second_name" property="secondName"/>
+            <collection property="thirdNameVos" ofType="SubjectThirdNameVo">
+                <result column="subject_id" property="thirdId"  />
+                <result column="subject_name" property="thirdName"  />
+            </collection>
+        </collection>
+    </resultMap>
+
+    <resultMap  id="rmGetSubjectAdmission"
+                    type="SubjectAdmissionVo">
+        <result column="year" property="year"/>
+            <collection property="subjects" ofType="SubjectVo">
+                <result column="subject_id" property="subjectId"  />
+                <result column="subject_name" property="subjectName"  />
+                <result column="subject_remark" property="subjectRemark"  />
+                <result column="low_rank" property="lowRank"  />
+                <result column="low_mark" property="lowMark"  />
+                <result column="number" property="number"  />
+                <result column="require_course_id" property="requireCourseId"  />
+                <result column="require_course_type_id" property="requireCourseTypeId"  />
+            </collection>
+    </resultMap>
+
+    <!--  直接去除多条，在业务层组装？  -->
+    <select id="listSubject" resultMap="rmListSubject" >
+        SELECT
+            college_id, second_name, subject_id, subject_name
+        FROM
+            data_admissions
+        WHERE
+            college_id = #{collegeId}
+        ORDER BY
+            second_id;
+    </select>
+
+    <select id="getSubjectAdmission" resultMap="rmGetSubjectAdmission" >
+        SELECT
+             a.college_id, a.subject_id, a.subject_name, a.subject_remark, a.low_rank, a.low_mark,
+             a.require_course_id, a.require_course_type_id, a.year, b.number
+        FROM
+            data_admissions a
+        LEFT JOIN
+            data_projects b
+        ON
+            a.project_id = b.id
+        WHERE
+            a.college_id = #{collegeId}
+        AND
+            a.year = #{year}
+        ORDER BY
+            a.subject_name, a.low_mark DESC ;
+    </select>
+
+</mapper>
+
